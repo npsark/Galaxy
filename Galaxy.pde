@@ -1,5 +1,7 @@
 import damkjer.ocd.*;
 
+
+
 Camera camera1;
 PImage bloomImg;
 
@@ -12,7 +14,8 @@ void setup() {
   background(0);
   //noLoop();
 
-  camera1 = new Camera(this, 0, 100, 100, 1, 10000);
+
+  camera1 = new Camera(this, 0, 10, 10, 1, 10000);
 
   initBloom();
 
@@ -32,7 +35,7 @@ void setup() {
         float rn = r+random(-1, 1)*10*spread;
 
         stars[i][j][k][0] = rn*cos(an);
-        stars[i][j][k][1] = pow((sin(map(j, 0, 359, 0, PI))+1)/2, 2)*random(-1, 1)*5 + random(-1,1)*sin(map(j, 0, 359, 0, PI))*5;
+        stars[i][j][k][1] = pow((sin(map(j, 0, 359, 0, PI))+1)/2, 2)*random(-1, 1)*5 + random(-1, 1)*sin(map(j, 0, 359, 0, PI))*5;
         stars[i][j][k][2] = rn*sin(an);
 
         if (random(1)<.01) {
@@ -44,7 +47,7 @@ void setup() {
         if (random(1)<0.01) {
           stars[i][j][k][4] = int(color(255, 0, 0));
         } else {
-          stars[i][j][k][4] = int(color(  map(rn,0,75,255,0),map(rn,0,75,255,0),map(rn,0,75,200,50)   ));
+          stars[i][j][k][4] = int(color(  map(rn, 0, 75, 255, 0), map(rn, 0, 75, 255, 0), map(rn, 0, 75, 200, 50)   ));
         }
       }
     }
@@ -60,6 +63,7 @@ void draw() {
   sphere(7);
 
   rotateY(frameCount*.005);
+
 
 
   /*stroke(255);
@@ -140,19 +144,26 @@ float rnd() {
 }
 
 void keyPressed() {
-  if (key=='a') {
+  if (key=='w') {
     camera1.dolly( -1 );
-  } else if (key=='z') {
+  } else if (key=='s') {
     camera1.dolly( 1 );
+  } else if (key=='a') {
+    camera1.truck(-1);
+  } else if (key=='d') {
+    camera1.truck(1);
+  } else if (key=='r') {
+    camera1.aim(0,0,0);
   }
 }
 
 void mouseMoved() {
   //camera1.dolly( (mouseX-pmouseX)*-1 );
   //camera1.boom(mouseY - pmouseY);
-  camera1.arc(radians(mouseY - pmouseY));
+  //camera1.arc(radians(mouseY - pmouseY));
   //camera1.circle(radians(1));
-  //camera1.look(radians(mouseX - pmouseX) / 2.0, radians(mouseY - pmouseY) / 2.0);
+  //camera1.look(radians(mouseX - pmouseX) / 1.0, radians(mouseY - pmouseY) / 1.0);
   //camera1.tumble(radians(mouseX - pmouseX), radians(mouseY - pmouseY));
+  camera1.pan(radians(mouseX - pmouseX) / 2.0);
+  camera1.tilt(radians(mouseY - pmouseY) / 2.0);
 }
-
